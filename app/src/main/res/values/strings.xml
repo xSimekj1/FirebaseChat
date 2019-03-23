@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">FirebaseChat</string>
+    <string name="new_account">New Account</string>
+    <string name="welcome_to_firebase_chat">Welcome to Firebase Chat</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="name">Name</string>
+    <string name="log_out">Log Out</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="all_users">All Users</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="already_have_account">ALREADY HAVE ACCOUNT</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="login">Login</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_status">Hi there, I am using Firebase Chat App</string>
+    <string name="user_name">Display Name</string>
+    <string name="settings_change_image">CHANGE IMAGE</string>
+    <string name="settings_change_status">CHANGE STATUS</string>
+    <string name="update_status">New Status</string>
+    <string name="update">Update</string>
+</resources>
