@@ -40,7 +40,6 @@ public class UsersActivity extends AppCompatActivity {
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mUserList = (RecyclerView)findViewById(R.id.users_list);
-        mUserList.setHasFixedSize(true);
         mUserList.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -50,10 +49,8 @@ public class UsersActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Query query = FirebaseDatabase.getInstance().getReference();
-
         FirebaseRecyclerOptions<Users> options = new FirebaseRecyclerOptions.Builder<Users>()
-                .setQuery(query, Users.class)
+                .setQuery(mUsersDatabase, Users.class)
                 .build();
 
         FirebaseRecyclerAdapter firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(options) {
@@ -61,6 +58,7 @@ public class UsersActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull UsersViewHolder usersViewHolder, int position, @NonNull Users users) {
                 usersViewHolder.setName(users.getName());
+                usersViewHolder.setStatus(users.getStatus());
             }
 
             @NonNull
@@ -70,6 +68,9 @@ public class UsersActivity extends AppCompatActivity {
                 return new UsersViewHolder(view);
             }
         };
+
+        firebaseRecyclerAdapter.startListening();
+        mUserList.setAdapter(firebaseRecyclerAdapter);
     }
 
     public static class UsersViewHolder extends RecyclerView.ViewHolder{
@@ -78,14 +79,17 @@ public class UsersActivity extends AppCompatActivity {
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
-
             mView = itemView;
         }
 
         public void setName(String name){
-
             TextView userNameView = (TextView) mView.findViewById(R.id.user_single_name);
             userNameView.setText(name);
+        }
+
+        public void setStatus(String status){
+            TextView userStatusView = (TextView) mView.findViewById(R.id.user_single_status);
+            userStatusView.setText(status);
         }
     }
 }
