@@ -2,6 +2,7 @@ package com.jakub.firebasechat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,10 +30,13 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.lang.reflect.Modifier;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -81,7 +85,10 @@ public class SettingsActivity extends AppCompatActivity {
                 mName.setText(name);
                 mStatus.setText(status);
 
-                Picasso.get().load(image).into(mDisplayImage);
+                if (!image.equals("default")){
+                    Picasso.get().load(image).into(mDisplayImage);
+                }
+
             }
 
             @Override
@@ -136,16 +143,54 @@ public class SettingsActivity extends AppCompatActivity {
 
                 Uri resultUri = result.getUri();
 
+                File thumbFilePath = new File(resultUri.getPath());
+
                 //Getting the Current UID of the User and storing it in a String.
                 final String current_user_id = mCurrentUser.getUid();
+
+                Bitmap thumbBitmap = new Compressor(this)
+                        .setMaxWidth(200)
+                        .setMaxHeight(200)
+                        .setQuality(50)
+                        .compressToBitmap(thumbFilePath);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumbBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                final byte[] thumb_byte = baos.toByteArray();
+
                 //Saving the image in the Firebase Storage and naming the child with the UID.
                 final StorageReference filePath = mImageStorage.child("profile_images").child(current_user_id + ".jpg");
+                final StorageReference thumb_filePath = mImageStorage.child("profile_images").child("thumbs").child(current_user_id + "jpg");
 
                 if (resultUri != null){
+
+                    UploadTask uploadTask = thumb_filePath.putBytes(thumb_byte);
+
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mImageStorage.child("profile_images").child("thumbs").child(current_user_id + "jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String downloadUrl = uri.toString();
+                                    mUserDatabase.child("thumb_image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                mProgressDialog.dismiss();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
                     filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                             if (task.isSuccessful()){
+
 
                                 mImageStorage.child("profile_images").child(current_user_id + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
