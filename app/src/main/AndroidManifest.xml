@@ -34,7 +34,9 @@
         <activity
             android:name=".UsersActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".QuizResultActivity" />
+        <activity android:name=".QuizActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuizResultActivity">
+
+    <TextView
+        android:id="@+id/result_total_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:text="Total questions:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/result_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:layout_marginLeft="24sp"
+        app:layout_constraintStart_toEndOf="@id/result_total_label"
+        app:layout_constraintTop_toTopOf="@id/result_total_label"/>
+
+    <TextView
+        android:id="@+id/result_correct_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Correct Answers:"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/result_total_label"
+        app:layout_constraintStart_toStartOf="@id/result_total_label"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/result_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textColor="@android:color/holo_green_dark"
+        app:layout_constraintStart_toStartOf="@id/result_total"
+        app:layout_constraintTop_toTopOf="@id/result_correct_label"/>
+
+    <TextView
+        android:id="@+id/result_incorrect_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Incorrect Answers:"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/result_correct_label"
+        app:layout_constraintStart_toStartOf="@id/result_total_label"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/result_incorrect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textColor="@android:color/holo_orange_dark"
+        app:layout_constraintStart_toStartOf="@id/result_total"
+        app:layout_constraintTop_toTopOf="@id/result_incorrect_label" />
+
+    <Button
+        android:id="@+id/result_button_backToProfile"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Back"
+        android:textSize="18dp"
+        android:padding="18dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
