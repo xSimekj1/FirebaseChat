@@ -21,6 +21,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private TextView mDisplayID;
 
+    DatabaseReference mQuestionCountReference;
     DatabaseReference mQuestionsDatabase;
 
     /*Quiz elements*/
@@ -30,7 +31,11 @@ public class QuizActivity extends AppCompatActivity {
     Button quiz_option_b;
     Button quiz_option_c;
     Button quiz_option_d;
-    int total = 0, correct = 0, wrong = 0;
+
+    int total = 0; //number of questions
+    int questions[];
+    int correct = 0;
+    int wrong = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +55,15 @@ public class QuizActivity extends AppCompatActivity {
         quiz_question_label = (TextView) findViewById(R.id.quiz_question);
         quiz_timer = (TextView) findViewById(R.id.quiz_timer);
 
+        mQuestionCountReference = FirebaseDatabase.getInstance().getReference().child("Questions");
 
-        updateQuestion();
-        timer(30, quiz_timer);
+        getQuestions();
 
     }
 
-    private void updateQuestion() {
+    private void updateQuestion(final int countQuestions) {
         total++;
-        if (total > 4){
+        if (total > countQuestions){
             startResultActivity();
         }else{
             mQuestionsDatabase = FirebaseDatabase.getInstance().getReference().child("Questions").child(String.valueOf(total));
@@ -75,25 +80,25 @@ public class QuizActivity extends AppCompatActivity {
                     quiz_option_a.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            evaluateQuestion(quiz_option_a, quiz_option_b, quiz_option_c, quiz_option_d, question);
+                            evaluateQuestion(countQuestions, quiz_option_a, quiz_option_b, quiz_option_c, quiz_option_d, question);
                         }
                     });
                     quiz_option_b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            evaluateQuestion(quiz_option_b, quiz_option_a, quiz_option_c, quiz_option_d, question);
+                            evaluateQuestion(countQuestions, quiz_option_b, quiz_option_a, quiz_option_c, quiz_option_d, question);
                         }
                     });
                     quiz_option_c.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            evaluateQuestion(quiz_option_c, quiz_option_b, quiz_option_a, quiz_option_d, question);
+                            evaluateQuestion(countQuestions, quiz_option_c, quiz_option_b, quiz_option_a, quiz_option_d, question);
                         }
                     });
                     quiz_option_d.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            evaluateQuestion(quiz_option_d, quiz_option_b, quiz_option_c, quiz_option_a, question);
+                            evaluateQuestion(countQuestions, quiz_option_d, quiz_option_b, quiz_option_c, quiz_option_a, question);
                         }
                     });
                 }
@@ -103,7 +108,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 }
 
-                public void evaluateQuestion(final Button myChoice, final Button other2, final Button other3, final Button other4, Question question){
+                public void evaluateQuestion(final int countQuestions, final Button myChoice, final Button other2, final Button other3, final Button other4, Question question){
                     //Right Answer
                     if (myChoice.getText().toString().equals(question.getAnswer())){
                         myChoice.setBackgroundColor(Color.GREEN);
@@ -113,7 +118,7 @@ public class QuizActivity extends AppCompatActivity {
                             public void run() {
                                 correct++;
                                 myChoice.setBackgroundResource(R.color.colorPrimary);
-                                updateQuestion();
+                                updateQuestion(countQuestions);
                             }
                         },1500);
                     }else {
@@ -136,7 +141,7 @@ public class QuizActivity extends AppCompatActivity {
                                 other2.setBackgroundResource(R.color.colorPrimary);
                                 other3.setBackgroundResource(R.color.colorPrimary);
                                 other4.setBackgroundResource(R.color.colorPrimary);
-                                updateQuestion();
+                                updateQuestion(countQuestions);
                             }
                         },1500);
                     }
@@ -167,5 +172,30 @@ public class QuizActivity extends AppCompatActivity {
         intent.putExtra("correct", String.valueOf(correct));
         intent.putExtra("incorrect", String.valueOf(wrong));
         startActivity(intent);
+    }
+
+    /*TO DO:
+    Get Number of questions stored in database... if more than 10 then pick random 10 and store their ijndexes into array*/
+    private void getQuestions(){
+        final int[] countQuestions = new int[1];
+        mQuestionCountReference = FirebaseDatabase.getInstance().getReference().child("Questions");
+        mQuestionCountReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    countQuestions[0] = (int) dataSnapshot.getChildrenCount();
+                    updateQuestion(countQuestions[0]);
+                    timer(30, quiz_timer);
+                }else{
+                    quiz_question_label.setText("No Questions in database");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
     }
 }
