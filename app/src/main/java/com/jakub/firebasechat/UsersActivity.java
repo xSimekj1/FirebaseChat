@@ -71,7 +71,7 @@ public class UsersActivity extends AppCompatActivity {
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent profileIntent = new Intent(UsersActivity.this, QuizActivity.class);
+                        Intent profileIntent = new Intent(UsersActivity.this, nearbyActivity.class);
                         profileIntent.putExtra("user_id", user_id);
                         startActivity(profileIntent);
                     }

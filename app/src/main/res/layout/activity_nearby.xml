@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/StatusText"/>
+
+    <TextView
+        android:id="@+id/opponent_name"
+        style="@style/StatusText"/>
+
+    <TextView
+        android:id="@+id/status"
+        style="@style/StatusText"/>
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="80sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/rock"
+            android:drawableTop="@drawable/rock"
+            android:text="@string/choice_rock"
+            style="@style/MoveButton"/>
+
+        <Button
+            android:id="@+id/paper"
+            android:drawableTop="@drawable/paper"
+            android:text="@string/choice_paper"
+            style="@style/MoveButton"/>
+
+        <Button
+            android:id="@+id/scissors"
+            android:drawableTop="@drawable/scissors"
+            android:text="@string/choice_scissors"
+            style="@style/MoveButton"/>
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/quiz_question"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="96dp"-->
+        <!--android:text="What is this question?"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textSize="24sp" />-->
+
+    <!--<GridLayout-->
+        <!--android:columnCount="2"-->
+        <!--android:rowCount="2"-->
+        <!--android:alignmentMode="alignMargins"-->
+        <!--android:columnOrderPreserved="false"-->
+        <!--android:layout_weight="8"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/optionA"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_column="0"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_row="0"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="OPTION A"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@android:color/white" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/optionB"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_column="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_row="0"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="OPTION B"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@android:color/white" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/optionC"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_column="0"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_row="1"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="OPTION C"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@android:color/white" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/optionD"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_column="1"-->
+            <!--android:layout_columnWeight="1"-->
+            <!--android:layout_gravity="fill"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:layout_row="1"-->
+            <!--android:layout_rowWeight="1"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="OPTION D"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@android:color/white" />-->
+
+    <!--</GridLayout>-->
+
+    <Button
+        android:id="@+id/find_opponent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="findOpponent"
+        android:text="@string/action_find_opponents"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="disconnect"
+        android:text="@string/action_disconnect"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+</LinearLayout>
